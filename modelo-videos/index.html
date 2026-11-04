@@ -129,7 +129,23 @@ header .btn{padding:.6rem 1.15rem;font-size:.92rem}
 .xp b::after{content:"→";transition:transform .3s var(--ease)}
 .xp:hover b::after{transform:translateX(5px)}
 
-/* cena do bugre saltando pela rolagem */
+/* bugre saindo da tela: a rolagem conduz o salto */
+.jump{height:300vh;padding:0;background:#f6e7c8}
+.jstage{position:sticky;top:var(--head);height:calc(100svh - var(--head));overflow:hidden;perspective:900px}
+.jbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 70%;transform:scale(1.15);will-change:transform}
+.jstage::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,244,225,.15),rgba(255,236,205,.35) 55%,rgba(230,196,138,.6))}
+.jword{position:absolute;z-index:2;left:0;right:0;top:30%;margin:0;text-align:center;font-weight:800;letter-spacing:-.04em;line-height:.8;font-size:min(30vw,300px);color:#fff;text-shadow:0 10px 0 rgba(140,96,40,.25),0 24px 50px rgba(80,50,10,.35);will-change:transform}
+.ridge{position:absolute;z-index:3;left:0;right:0;bottom:0;width:100%;height:42%;will-change:transform}
+.jcar{position:absolute;z-index:1;left:50%;top:52%;width:min(70vw,720px);height:auto;margin-left:calc(min(70vw,720px) / -2);transform-origin:50% 60%;will-change:transform,filter;filter:drop-shadow(0 30px 25px rgba(60,35,5,.35))}
+.jcar.front{z-index:5}
+.dust{position:absolute;z-index:4;left:44%;top:62%;width:220px;height:140px;border-radius:50%;background:radial-gradient(closest-side,rgba(232,201,146,.95),rgba(232,201,146,0));opacity:0;pointer-events:none;will-change:transform,opacity}
+.dust.d2{left:56%;width:180px}.dust.d3{left:36%;top:66%;width:260px}
+.jcopy{position:absolute;z-index:6;left:0;right:0;bottom:8%;text-align:center;padding:0 16px;opacity:0;transform:translateY(30px);transition:opacity .6s var(--ease),transform .8s var(--ease)}
+.jcopy.on{opacity:1;transform:none}
+.jcopy h2{color:#3b2a10;text-shadow:0 2px 18px rgba(255,240,215,.9)}
+.jcopy p{color:#4a3618;font-weight:600;margin:.6rem auto 1.3rem;max-width:44ch;text-shadow:0 1px 10px rgba(255,240,215,.9)}
+@media (max-width:640px){.jump{height:260vh}.jword{top:36%;font-size:25vw}.jcar{width:92vw;margin-left:-46vw;top:54%}.ridge{height:36%}.jcopy{bottom:96px}}
+@media (prefers-reduced-motion:reduce){.jump{height:auto}.jstage{position:relative;height:80svh}.jcar{z-index:5;transform:translateY(-30%) scale(.8)}.jcopy{opacity:1;transform:none}}
 .scene{overflow:hidden;padding-bottom:0;background:linear-gradient(180deg,#fbf6ec 0%,#f6e7c8 100%)}
 .scene .stage{position:relative;height:clamp(260px,36vw,420px);margin-top:1rem}
 .scene .ground{position:absolute;left:0;right:0;bottom:0;height:46%;background:radial-gradient(120% 90% at 30% 100%,#eccf95 0 55%,transparent 56%),radial-gradient(90% 80% at 85% 100%,#e5c27f 0 50%,transparent 51%)}
@@ -348,20 +364,23 @@ footer strong{color:var(--ink)}
   </div>
 </section>
 
-<section class="scene" data-scene="buggy">
-  <div class="wrap rv">
-    <h2>Bugre pelas praias e <span class="hl">mirantes</span> de Búzios</h2>
-    <p class="lead">O passeio que todo mundo comenta na volta. Vento no rosto, paradas para foto e um guia que conhece cada curva.</p>
-    <ul class="points">
-      <li><svg><use href="#ok"/></svg>Guia local e equipamento de segurança</li>
-      <li><svg><use href="#ok"/></svg>Paradas nas praias mais bonitas</li>
-      <li><svg><use href="#ok"/></svg>Ideal para casais, amigos e família</li>
-    </ul>
-  </div>
-  <div class="stage" aria-hidden="true">
-    <div class="ground"></div>
-    <span class="shadow"></span>
-    <img class="rider" src="img/bugre.webp" alt="" loading="lazy" width="900" height="506">
+<section class="jump" id="bugre" aria-label="Passeio de bugre">
+  <div class="jstage">
+    <img class="jbg" src="img/dia-1.jpg" alt="" loading="lazy">
+    <p class="jword" aria-hidden="true">BUGRE</p>
+    <img class="jcar" src="img/bugre.webp" alt="Bugre saltando" loading="lazy" width="900" height="506">
+    <svg class="ridge" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6c48a"/><stop offset=".35" stop-color="#d9b06e"/><stop offset="1" stop-color="#b98a4a"/></linearGradient>
+      <linearGradient id="rg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1d9aa"/><stop offset="1" stop-color="#d7b277"/></linearGradient></defs>
+      <path d="M0 150 C180 120 300 60 470 70 C640 80 700 40 820 30 C960 20 1080 90 1240 100 C1340 106 1400 120 1440 126 V320 H0Z" fill="url(#rg2)" opacity=".75"/>
+      <path d="M0 200 C160 170 320 120 520 110 C700 100 760 70 900 74 C1060 80 1180 150 1440 170 V320 H0Z" fill="url(#rg)"/>
+    </svg>
+    <span class="dust" aria-hidden="true"></span><span class="dust d2" aria-hidden="true"></span><span class="dust d3" aria-hidden="true"></span>
+    <div class="jcopy">
+      <h2>Bugre pelas dunas, praias e <span class="hl">mirantes</span></h2>
+      <p>Guia local, equipamento de segurança e paradas nas praias mais bonitas de Búzios.</p>
+      <a class="btn btn-gold" href="https://wa.me/5522997729300?text=Ol%C3%A1!%20Quero%20o%20passeio%20de%20bugre%20em%20B%C3%BAzios." target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Quero andar de bugre</a>
+    </div>
   </div>
 </section>
 
@@ -509,28 +528,37 @@ footer strong{color:var(--ink)}
   addEventListener('scroll', heroFrame, { passive: true });
   heroFrame();
 
-  // bugre saltando conforme a rolagem
-  const sc = document.querySelector('.scene'), rider = sc.querySelector('.rider'), sh = sc.querySelector('.shadow');
+  // bugre surge atrás do barranco, salta por cima das letras e vem para cima de quem vê
+  const jp = document.querySelector('.jump'), jst = jp.querySelector('.jstage'), car = jp.querySelector('.jcar');
+  const word = jp.querySelector('.jword'), ridge = jp.querySelector('.ridge'), jbg = jp.querySelector('.jbg');
+  const dusts = [...jp.querySelectorAll('.dust')], jcopy = jp.querySelector('.jcopy');
   const fin = document.querySelector('.final'), fi = fin.querySelector('img');
-  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-  const clamp = v => Math.max(0, Math.min(1, v));
+  const clamp = v => Math.max(0, Math.min(1, v)), seg = (p, a, b) => clamp((p - a) / (b - a));
+  const eOut = t => 1 - Math.pow(1 - t, 3), eIn = t => t * t * t;
   let ticking = false;
   const frame = () => {
     ticking = false;
-    const vh = innerHeight, r = sc.getBoundingClientRect();
+    const vh = innerHeight, r = jp.getBoundingClientRect();
     if (r.bottom > 0 && r.top < vh) {
-      const p = clamp((vh - r.top) / (vh + r.height));
-      const W = sc.clientWidth, w = rider.offsetWidth;
-      const x = -w + p * (W + w * 1.3);
-      // anda pela duna levantando areia: balanço leve + um pulinho na crista (sem distorcer)
-      const hopH = Math.min(46, sc.querySelector('.stage').offsetHeight * .16);
-      const j = clamp((p - 0.46) / 0.16), air = Math.sin(j * Math.PI);
-      const bob = Math.abs(Math.sin(p * 70)) * 3;
-      const y = -air * hopH - bob;
-      const rot = -3 * Math.sin(j * Math.PI * 2) * (j > 0 && j < 1 ? 1 : 0) + Math.sin(p * 55) * .6;
-      rider.style.transform = `translate3d(${x}px,${y}px,0) rotate(${rot}deg)`;
-      sh.style.transform = `translate3d(${x + w * .12}px,0,0) scale(${1 - air * .25})`;
-      sh.style.opacity = 1 - air * .35;
+      const p = clamp(-r.top / Math.max(1, jp.offsetHeight - jst.offsetHeight));
+      const H = jst.offsetHeight;
+      const rise = eOut(seg(p, .05, .3));          // sobe de trás do barranco
+      const fly = seg(p, .3, .62);                  // salto sobre as letras
+      const come = Math.pow(seg(p, .58, .84), 1.6);  // vem para a tela
+      let y = (1 - rise) * H * .42, sc = .38 + rise * .07, rot = -4 * rise, x = -12 * (1 - rise);
+      if (fly > 0) { y -= Math.sin(fly * Math.PI) * H * .58 + fly * H * .05; sc += fly * .42; rot += -12 * Math.sin(fly * Math.PI) + 8 * fly; x += fly * 10; }
+      if (come > 0) { y += come * H * .5; sc += come * 3.4; rot += come * 7; }
+      car.style.transform = `translate3d(${x}vw,${y}px,0) scale(${sc}) rotate(${rot}deg)`;
+      car.style.filter = `drop-shadow(0 30px 25px rgba(60,35,5,.35)) blur(${come * 6}px)`;
+      car.style.opacity = 1 - seg(p, .8, .88);
+      car.classList.toggle('front', fly > .12);
+      word.style.transform = `translate3d(0,${p * -6}vh,0) scale(${1 + p * .08})`;
+      word.style.opacity = 1 - seg(p, .74, .86) * .88;
+      ridge.style.transform = `translate3d(0,${come * 12}%,0)`;
+      jbg.style.transform = `scale(${1.15 - p * .12}) translate3d(0,${p * -3}%,0)`;
+      const burst = Math.sin(seg(p, .22, .44) * Math.PI);
+      dusts.forEach((d, i) => { d.style.opacity = burst * (.95 - i * .2); d.style.transform = `translate3d(${(i - 1) * burst * 60}px,${-burst * 30}px,0) scale(${.6 + burst * (1.2 + i * .3)})`; });
+      jcopy.classList.toggle('on', p > .78);
     }
     const fr = fin.getBoundingClientRect();
     if (fr.top < vh && fr.bottom > 0) fi.style.transform = `translate3d(0,${(fr.top / vh) * -60}px,0)`;
